@@ -11,14 +11,15 @@ public class CustomPreAuthenticatedProcessingFilter extends AbstractPreAuthentic
     @Override
     protected Object getPreAuthenticatedPrincipal(HttpServletRequest httpServletRequest) {
         String principal = httpServletRequest.getParameter(principalRequestParameter);
-        System.out.println("[QQQQQQQQQQ] getPreAuthenticatedPrincipal: " + principal);
+        this.logger.debug("Principal come: " + principal);
         return principal;
     }
 
     @Override
     protected Object getPreAuthenticatedCredentials(HttpServletRequest httpServletRequest) {
-        System.out.println("[QQQQQQQQQQ] getPreAuthenticatedCredentials");
-        return this.credentialsRequestParameter != null?httpServletRequest.getParameter(this.credentialsRequestParameter):"N/A";
+        String credentials = httpServletRequest.getParameter(this.credentialsRequestParameter);
+        this.logger.debug("Credentials come: " + credentials);
+        return this.credentialsRequestParameter != null ? credentials : "N/A";
     }
 
     public void setPrincipalRequestParameter(String principalRequestParameter) {

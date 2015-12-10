@@ -1,5 +1,7 @@
 package com.zemlyak.web.security;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +22,8 @@ import java.util.Arrays;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final Log LOG = LogFactory.getLog(WebSecurityConfig.class);
+
     @Autowired
     private AuthenticationManager manager;
 
@@ -57,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String ekbId) throws UsernameNotFoundException {
-                System.out.println("[QQQQQQQQQQ] loadUserByUsername: " + ekbId);
+                LOG.debug("Try to loadUserByUsername: " + ekbId);
                 return new SimpleDetails(ekbId, Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
             }
         };
