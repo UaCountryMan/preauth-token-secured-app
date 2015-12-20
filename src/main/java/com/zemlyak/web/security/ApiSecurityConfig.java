@@ -21,8 +21,8 @@ import org.springframework.security.web.authentication.preauth.RequestHeaderAuth
 import java.util.Arrays;
 
 @Configuration
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final Log LOG = LogFactory.getLog(WebSecurityConfig.class);
+public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final Log LOG = LogFactory.getLog(ApiSecurityConfig.class);
 
     @Autowired
     private AuthenticationManager manager;
@@ -30,6 +30,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http    .csrf().disable()
+                .requestMatchers()
+                    .antMatchers("/rest/**")
+                    .and()
                 .addFilterBefore(customPreAuthenticatedProcessingFilter(), RequestHeaderAuthenticationFilter.class)
                 .authenticationProvider(preAuthenticatedAuthenticationProvider())
                 .authorizeRequests()
